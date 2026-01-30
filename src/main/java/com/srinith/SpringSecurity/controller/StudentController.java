@@ -1,4 +1,4 @@
-package com.srinith.SpringSecurity;
+package com.srinith.SpringSecurity.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.srinith.SpringSecurity.model.Student;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +18,8 @@ public class StudentController {
     private List<Student> students = new ArrayList<>(List.of(
             new Student(1,"Srinith", 60),
             new Student(2,"Ramesh", 50)
-
-
     ));
+
     @GetMapping("/students")
     public List<Student> getStudents(){
         return students;
