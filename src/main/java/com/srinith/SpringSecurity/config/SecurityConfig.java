@@ -20,7 +20,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(customizer -> customizer.disable());
         http.authorizeHttpRequests(request -> 
-            request.requestMatchers("/register").permitAll()
+            request.requestMatchers("/register","/login").permitAll()
                    .anyRequest().authenticated()
         );
         http.httpBasic(Customizer.withDefaults());

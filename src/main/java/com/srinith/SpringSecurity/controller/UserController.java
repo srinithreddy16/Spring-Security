@@ -19,4 +19,9 @@ public class UserController {
         System.out.println("Register endpoint called with username: " + user.getUsername());
         return service.register(user);
     }
+
+    @PostMapping("/login")
+    public String login(@RequestBody Users user){
+        return service.verify(user);
+    }
 }

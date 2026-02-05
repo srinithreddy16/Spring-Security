@@ -3,7 +3,10 @@ package com.srinith.SpringSecurity.service;
 
 import com.srinith.SpringSecurity.model.Users;
 import com.srinith.SpringSecurity.repo.UserRepo;
+import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +15,10 @@ public class UserService {
 
     @Autowired
     private UserRepo repo;
+    @Autowired
+    AuthenticationManager authManager;
+    @Autowired
+    private JWTService jwtservice;
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
@@ -19,5 +26,16 @@ public class UserService {
         user.setPassword(encoder.encode(user.getPassword()));
         return repo.save(user);
 
+    }
+
+    public String verify(Users user) {
+        Authentication authentication =
+                authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
+
+
+        if(authentication.isAuthenticated())
+            return jwtservice.generateToken();
+
+        return "fail";
     }
 }
